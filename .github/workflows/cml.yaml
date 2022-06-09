@@ -16,8 +16,13 @@ jobs:
           python train.py
           #- name: Write CML report
           
-          echo "Model Metrics"
-          cat metrics.txt
+          echo "## Model Metrics" > report.md
+          cat metrics.txt >> report.md
+          
+          cml-publish feature_importance.png --md >> report.md
+          cml-publish residuals.png --md >> report.md
+          
+          cml-send-comment report.md
         
         #run: |
           # Post reports as comments in GitHub PRs
